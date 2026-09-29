@@ -46,10 +46,12 @@ struct `RFC_2183.DispositionType Coder Tests` {
 
     @Test
     func `a disposition type round-trips through its encoded form`() throws {
-        var encoded = try RFC_2183.DispositionType.formData.encoded()[...]
+        var bytes: [Byte] = []
+        try RFC_2183.DispositionType.coder.serialize(RFC_2183.DispositionType.formData, into: &bytes)
+        var encoded = bytes[...]
 
         #expect(encoded == "form-data")
-        #expect(try RFC_2183.DispositionType(decoding: &encoded) == .formData)
+        #expect(try RFC_2183.DispositionType.coder.parse(&encoded) == .formData)
         #expect(encoded.isEmpty)
     }
 }

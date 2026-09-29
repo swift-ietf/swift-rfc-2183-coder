@@ -40,5 +40,3 @@ extension RFC_2183.Filename {
 
     public static var coder: Coder<ArraySlice<Byte>, [Byte]> { .init() }
 }
-
-extension RFC_2183.Filename: @retroactive Coder.Codable {}

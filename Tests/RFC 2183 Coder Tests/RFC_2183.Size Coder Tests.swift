@@ -16,7 +16,9 @@ struct `RFC_2183.Size Coder Tests` {
 
         #expect(size.description == "524288")
         #expect(size.rawValue == "524288")
-        #expect(try size.encoded() == "524288")
+        var bytes: [Byte] = []
+        try RFC_2183.Size.coder.serialize(size, into: &bytes)
+        #expect(bytes == "524288")
     }
 
     @Test

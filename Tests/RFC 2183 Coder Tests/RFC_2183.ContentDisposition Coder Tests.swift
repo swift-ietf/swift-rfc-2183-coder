@@ -46,11 +46,13 @@ struct `RFC_2183.ContentDisposition Coder Tests` {
             parameters: .init(filename: try RFC_2183.Filename(#"file"with"quotes.txt"#))
         )
 
+        var bytes: [Byte] = []
+        try RFC_2183.ContentDisposition.coder.serialize(disposition, into: &bytes)
         #expect(
-            try disposition.encoded()
+            bytes
                 == #"attachment; filename="file\"with\"quotes.txt""#
         )
-        #expect(try RFC_2183.ContentDisposition(ascii: disposition.encoded()) == disposition)
+        #expect(try RFC_2183.ContentDisposition(ascii: bytes) == disposition)
     }
 
     @Test

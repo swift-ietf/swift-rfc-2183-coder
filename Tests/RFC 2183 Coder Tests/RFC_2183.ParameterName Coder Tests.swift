@@ -42,10 +42,12 @@ struct `RFC_2183.ParameterName Coder Tests` {
     func `a parameter name round-trips through its encoded form`() throws {
         let name = try RFC_2183.ParameterName("x-token")
 
-        var encoded = try name.encoded()[...]
+        var bytes: [Byte] = []
+        try RFC_2183.ParameterName.coder.serialize(name, into: &bytes)
+        var encoded = bytes[...]
 
         #expect(encoded == "x-token")
-        #expect(try RFC_2183.ParameterName(decoding: &encoded) == name)
+        #expect(try RFC_2183.ParameterName.coder.parse(&encoded) == name)
         #expect(encoded.isEmpty)
     }
 }

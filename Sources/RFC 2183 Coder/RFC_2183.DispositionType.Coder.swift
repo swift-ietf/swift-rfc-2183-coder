@@ -37,5 +37,3 @@ extension RFC_2183.DispositionType {
 
     public static var coder: Coder<ArraySlice<Byte>, [Byte]> { .init() }
 }
-
-extension RFC_2183.DispositionType: @retroactive Coder.Codable {}

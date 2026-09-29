@@ -52,10 +52,12 @@ struct `RFC_2183.Filename Coder Tests` {
     func `a filename round-trips through its encoded form`() throws {
         let filename = try RFC_2183.Filename("my document.pdf")
 
-        var encoded = try filename.encoded()[...]
+        var bytes: [Byte] = []
+        try RFC_2183.Filename.coder.serialize(filename, into: &bytes)
+        var encoded = bytes[...]
 
         #expect(encoded == "my document.pdf")
-        #expect(try RFC_2183.Filename(decoding: &encoded) == filename)
+        #expect(try RFC_2183.Filename.coder.parse(&encoded) == filename)
         #expect(encoded.isEmpty)
     }
 }
