@@ -1,9 +1,9 @@
 public import Byte
 public import Coder
 public import Cursor
-public import Cursor_Standard_Library_Integration
+public import Cursor
 public import RFC_2183
-import Byte_Standard_Library_Integration
+import Byte
 import Parser
 import Serializer
 
@@ -27,7 +27,7 @@ extension RFC_2183.ContentDisposition {
                 return code != 0x0D && code != 0x0A
             }
             do throws(Failure) {
-                return try Text.contentDisposition(String(decoding: bytes, as: UTF8.self))
+                return try RFC_2183.ContentDisposition(ascii: bytes)
             } catch {
                 input.seek(to: start)
                 throw error
@@ -42,4 +42,4 @@ extension RFC_2183.ContentDisposition {
     public static var coder: Coder<ArraySlice<Byte>, [Byte]> { .init() }
 }
 
-extension RFC_2183.ContentDisposition: Coder.Codable {}
+extension RFC_2183.ContentDisposition: @retroactive Coder.Codable {}

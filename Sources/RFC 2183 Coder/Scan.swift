@@ -37,4 +37,29 @@ enum Scan {
         let code = byte.bitPattern
         return code == 0x20 || code == 0x09
     }
+
+    static func isTokenCharacter(_ byte: Byte) -> Bool {
+        guard let code = try? ASCII.Code(byte) else {
+            return false
+        }
+        return code.isVisible && !specials.contains(code)
+    }
+
+    static let specials: [ASCII.Code] = [
+        .leftParenthesis,
+        .rightParenthesis,
+        .lessThanSign,
+        .greaterThanSign,
+        .atSign,
+        .comma,
+        .semicolon,
+        .colon,
+        .backslash,
+        .quotationMark,
+        .solidus,
+        .leftSquareBracket,
+        .rightSquareBracket,
+        .questionMark,
+        .equalsSign,
+    ]
 }

@@ -1,6 +1,6 @@
 public import RFC_2183
 public import RFC_5322
-import Binary_Serializable
+import Binary
 
 extension RFC_5322.Header {
 

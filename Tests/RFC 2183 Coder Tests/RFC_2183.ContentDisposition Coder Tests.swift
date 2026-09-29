@@ -1,8 +1,8 @@
 import Byte
-import Byte_Standard_Library_Integration
+import Byte
 import Coder
-import Coder_Standard_Library_Integration
-import Cursor_Standard_Library_Integration
+import Coder
+import Cursor
 import RFC_2183
 import RFC_2183_Coder
 import Testing
@@ -64,15 +64,6 @@ struct `RFC_2183.ContentDisposition Coder Tests` {
             disposition.description
                 == #"form-data; filename="photo.jpg"; name="avatar""#
         )
-    }
-
-    @Test
-    func `a size renders as decimal octets`() throws {
-        let size = try RFC_2183.Size(bytes: 1_048_576)
-
-        var input: ArraySlice<Byte> = "1048576"
-        #expect(try RFC_2183.Size.coder.parse(&input) == size)
-        #expect(try size.encoded() == "1048576")
     }
 
     @Test

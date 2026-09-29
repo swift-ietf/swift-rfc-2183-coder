@@ -6,27 +6,24 @@ public import RFC_2183
 import Parser
 import Serializer
 
-extension RFC_2183.Filename {
+extension RFC_2183.DispositionType {
 
     public struct Coder<
         Input: Cursor.`Protocol`<Byte, Never>,
         Buffer: RangeReplaceableCollection<Byte>
     >: Coding {
 
-        public typealias Output = RFC_2183.Filename
+        public typealias Output = RFC_2183.DispositionType
 
-        public typealias Failure = RFC_2183.Filename.Error
+        public typealias Failure = RFC_2183.DispositionType.Error
 
         public init() {}
 
         public borrowing func parse(_ input: inout Input) throws(Failure) -> Output {
             let start = input.checkpoint
-            let bytes = Scan.run(&input) { byte in
-                let code = byte.bitPattern
-                return code != 0x3B && code != 0x0D && code != 0x0A
-            }
+            let bytes = Scan.run(&input, while: Scan.isTokenCharacter)
             do throws(Failure) {
-                return try RFC_2183.Filename(ascii: bytes)
+                return try RFC_2183.DispositionType(ascii: bytes)
             } catch {
                 input.seek(to: start)
                 throw error
@@ -41,4 +38,4 @@ extension RFC_2183.Filename {
     public static var coder: Coder<ArraySlice<Byte>, [Byte]> { .init() }
 }
 
-extension RFC_2183.Filename: @retroactive Coder.Codable {}
+extension RFC_2183.DispositionType: @retroactive Coder.Codable {}

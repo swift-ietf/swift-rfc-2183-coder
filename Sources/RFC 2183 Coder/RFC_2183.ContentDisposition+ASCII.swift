@@ -1,29 +1,9 @@
 public import ASCII
-public import ASCII_Serializer
-public import Binary_Serializable
+public import Binary
 public import Byte
-public import Parseable_ASCII
 public import RFC_2183
-import Byte_Standard_Library_Integration
 
-extension RFC_2183.ContentDisposition: @retroactive ASCII.Parseable {
-
-    public init<Bytes: Swift.Collection>(ascii bytes: Bytes) throws(Error)
-    where Bytes.Element == Byte {
-        for byte in bytes {
-            do throws(ASCII.Code.Error) {
-                _ = try ASCII.Code(byte)
-            } catch {
-                throw Error.invalidFormat(String(decoding: bytes, as: UTF8.self))
-            }
-        }
-        self = try Text.contentDisposition(String(decoding: bytes, as: UTF8.self))
-    }
-
-    public init(_ string: some StringProtocol) throws(Error) {
-        try self.init(ascii: string.utf8.map(Byte.init(bitPattern:)))
-    }
-}
+extension RFC_2183.ContentDisposition: @retroactive ASCII.Parseable {}
 
 extension RFC_2183.ContentDisposition: @retroactive ASCII.Serializable,
     @retroactive Binary.Serializable

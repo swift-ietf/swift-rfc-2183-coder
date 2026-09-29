@@ -1,9 +1,9 @@
 public import Byte
 public import Coder
 public import Cursor
-public import Cursor_Standard_Library_Integration
+public import Cursor
 public import RFC_2183
-import Byte_Standard_Library_Integration
+import Byte
 import Parser
 import Serializer
 
@@ -35,11 +35,11 @@ extension RFC_2183.Size {
         }
 
         public borrowing func serialize(_ output: Output, into buffer: inout Buffer) throws(Failure) {
-            Scan.append(output.rawValue, into: &buffer)
+            Scan.append(String(output.bytes), into: &buffer)
         }
     }
 
     public static var coder: Coder<ArraySlice<Byte>, [Byte]> { .init() }
 }
 
-extension RFC_2183.Size: Coder.Codable {}
+extension RFC_2183.Size: @retroactive Coder.Codable {}
