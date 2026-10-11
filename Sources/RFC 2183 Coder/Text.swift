@@ -6,7 +6,7 @@ enum Text {
     static func quoted(_ value: String) -> String {
         var result = "\""
         for character in value {
-            if character == "\"" { result.append("\\") }
+            if character == "\"" || character == "\\" { result.append("\\") }
             result.append(character)
         }
         result.append("\"")
