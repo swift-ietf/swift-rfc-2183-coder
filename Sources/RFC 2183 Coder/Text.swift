@@ -36,12 +36,12 @@ enum Text {
             result += "; size=" + String(size.bytes)
         }
         if let name = parameters.name {
-            result += "; name=" + quoted(name)
+            result += "; name=" + quoted(name.value)
         }
         for (key, value) in parameters.extensionParameters.sorted(by: {
             $0.key.rawValue < $1.key.rawValue
         }) {
-            result += "; " + key.rawValue + "=" + quoted(value)
+            result += "; " + key.rawValue + "=" + quoted(value.value)
         }
 
         return result

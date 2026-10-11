@@ -59,7 +59,7 @@ struct `RFC_2183.ContentDisposition Coder Tests` {
     func `RFC 2183 §2, RFC 2045 §5.1 and RFC 822 §3.3: a backslash in a quoted value is written as a quoted-pair`() throws {
         let disposition = RFC_2183.ContentDisposition(
             type: .formData,
-            parameters: .init(name: #"a\b"#)
+            parameters: .init(name: try RFC_2183.ParameterValue(#"a\b"#))
         )
 
         var bytes: [Byte] = []
@@ -71,7 +71,7 @@ struct `RFC_2183.ContentDisposition Coder Tests` {
     @Test
     func `form data renders its field name and filename`() throws {
         let disposition = RFC_2183.ContentDisposition.formData(
-            name: "avatar",
+            name: try RFC_2183.ParameterValue("avatar"),
             filename: try RFC_2183.Filename("photo.jpg")
         )
 
