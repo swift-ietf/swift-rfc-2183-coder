@@ -3,7 +3,6 @@ public import Coder
 public import Cursor
 public import Cursor
 public import RFC_2183
-import Byte
 import Parser
 import Serializer
 
